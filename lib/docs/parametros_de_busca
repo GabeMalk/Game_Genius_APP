@@ -1,0 +1,109 @@
+Filtros sempre ativos:
+game_type = 0 (Main Game - id: 0)
+rating_count >= 5
+rating >= 40
+
+Plataformas:
+// Só pode escolher um
+
+PC - platforms id: 6
+
+Era:
+// Pode escolher múltiplos
+
+Lançamentos (Do mês retrasado até a data de hoje)
+Atualidade (De 2020 até a data de hoje) // Selecionado por padrão
+Modernos (2014 a 2020)
+Old School (De 2002 até 2014)
+Clássicos (Pré 2002)
+
+
+Filtros:
+
+// Filtros basicos (aparece por padrão):
+
+RPG - genres id: 12
+Aventura - genres id: 31
+Ação - themes id: 1
+Plataforma - genres id: 8
+Estrategia - 
+
+
+// Filtros avançados (tem que clicar em "avançado" para liberar)
+
+
+GENERO
+Arcade - ID: 33
+Card & Board Game - ID: 35
+Fighting - ID: 4
+Hack and slash/Beat 'em up - ID: 25
+Indie - ID: 32
+MOBA - ID: 36
+Music - ID: 7
+Pinball - ID: 30
+Point-and-click - ID: 2
+Puzzle - ID: 9
+Quiz/Trivia - ID: 26
+Racing - ID: 10
+Real Time Strategy (RTS) - ID: 11
+Shooter - ID: 5
+Simulator - ID: 13
+Sport - ID: 14
+Strategy - ID: 15
+Tactical - ID: 24
+Turn-based strategy (TBS) - ID: 16
+Visual Novel - ID: 34
+
+TEMAS
+
+4X (explore, expand, exploit, and exterminate) - ID: 41
+Business - ID: 28
+Comedy - ID: 27
+Drama - ID: 31
+Educational - ID: 34
+Erotic - ID: 42
+Fantasy - ID: 17
+Historical - ID: 22
+Horror - ID: 19
+Kids - ID: 35
+Mystery - ID: 43
+Non-fiction - ID: 32
+Open world - ID: 38
+Party - ID: 40
+Romance - ID: 44
+Sandbox - ID: 33
+Science fiction - ID: 18
+Stealth - ID: 23
+Survival - ID: 21
+Thriller - ID: 20
+Warfare - ID: 39
+
+KEYWORDS
+
+boss fight - ID: 3486
+exploration - ID: 72
+magic - ID: 226
+aliens - ID: 3
+swimming - ID: 2324
+day/night cycle - ID: 2452
+shopping - ID: 4388
+rpg elements - ID: 5308
+sword & sorcery - ID: 2472
+minigames - ID: 274
+world map - ID: 4285
+turn-based - ID: 415
+dialogue trees - ID: 1523
+medieval - ID: 151
+branching storyline - ID: 4855
+military - ID: 563
+Anime - ID: 78
+
+PERSPECTIVE:
+
+Auditory - ID: 6
+Bird view / Isometric - ID: 3
+First person - ID: 1
+Side view - ID: 4
+Text - ID: 5
+Third person - ID: 2
+Virtual Reality - ID: 7
