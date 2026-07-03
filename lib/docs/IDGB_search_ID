@@ -1,0 +1,419 @@
+GENEROS:
+
+Adventure - ID: 31
+Arcade - ID: 33
+Card & Board Game - ID: 35
+Fighting - ID: 4
+Hack and slash/Beat 'em up - ID: 25
+Indie - ID: 32
+MOBA - ID: 36
+Music - ID: 7
+Pinball - ID: 30
+Platform - ID: 8
+Point-and-click - ID: 2
+Puzzle - ID: 9
+Quiz/Trivia - ID: 26
+Racing - ID: 10
+Real Time Strategy (RTS) - ID: 11
+Role-playing (RPG) - ID: 12
+Shooter - ID: 5
+Simulator - ID: 13
+Sport - ID: 14
+Strategy - ID: 15
+Tactical - ID: 24
+Turn-based strategy (TBS) - ID: 16
+Visual Novel - ID: 34
+
+TEMAS:
+
+4X (explore, expand, exploit, and exterminate) - ID: 41
+Action - ID: 1
+Business - ID: 28
+Comedy - ID: 27
+Drama - ID: 31
+Educational - ID: 34
+Erotic - ID: 42
+Fantasy - ID: 17
+Historical - ID: 22
+Horror - ID: 19
+Kids - ID: 35
+Mystery - ID: 43
+Non-fiction - ID: 32
+Open world - ID: 38
+Party - ID: 40
+Romance - ID: 44
+Sandbox - ID: 33
+Science fiction - ID: 18
+Stealth - ID: 23
+Survival - ID: 21
+Thriller - ID: 20
+Warfare - ID: 39
+
+PLATAFORMAS:
+
+1292 Advanced Programmable Video System - ID: 139
+3DO Interactive Multiplayer - ID: 50
+64DD - ID: 416
+Acorn Archimedes - ID: 116
+Acorn Electron - ID: 134
+Advanced Pico Beena - ID: 507
+AirConsole - ID: 389
+Amazon Fire TV - ID: 132
+Amiga - ID: 16
+Amiga CD32 - ID: 114
+Amstrad CPC - ID: 25
+Amstrad GX4000 - ID: 506
+Amstrad PCW - ID: 154
+Analogue electronics - ID: 100
+Android - ID: 34
+Apple II - ID: 75
+Apple IIGS - ID: 115
+Apple Pippin - ID: 476
+Arcade - ID: 52
+Arcadia 2001 - ID: 473
+Arduboy - ID: 438
+Atari 2600 - ID: 59
+Atari 5200 - ID: 66
+Atari 7800 - ID: 60
+Atari 8-bit - ID: 65
+Atari Jaguar - ID: 62
+Atari Jaguar CD - ID: 410
+Atari Lynx - ID: 61
+Atari ST/STE - ID: 63
+AY-3-8500 - ID: 140
+AY-3-8603 - ID: 145
+AY-3-8605 - ID: 146
+AY-3-8606 - ID: 147
+AY-3-8607 - ID: 148
+AY-3-8610 - ID: 141
+AY-3-8710 - ID: 144
+AY-3-8760 - ID: 143
+Bally Astrocade - ID: 91
+BBC Microcomputer System - ID: 69
+BlackBerry OS - ID: 73
+Blu-ray Player - ID: 239
+Call-A-Computer time-shared mainframe computer system - ID: 107
+Casio Loopy - ID: 380
+CDC Cyber 70 - ID: 109
+ColecoVision - ID: 68
+Commodore 16 - ID: 93
+Commodore C64/128/MAX - ID: 15
+Commodore CDTV - ID: 158
+Commodore PET - ID: 90
+Commodore Plus/4 - ID: 94
+Commodore VIC-20 - ID: 71
+Daydream - ID: 164
+DEC GT40 - ID: 98
+Digiblast - ID: 486
+Donner Model 30 - ID: 85
+DOS - ID: 13
+Dragon 32/64 - ID: 153
+Dreamcast - ID: 23
+DUPLICATE Stadia - ID: 203
+DVD Player - ID: 238
+e-Reader / Card-e Reader - ID: 510
+EDSAC - ID: 102
+Elektor TV Games Computer - ID: 505
+Epoch Cassette Vision - ID: 375
+Epoch Super Cassette Vision - ID: 376
+Evercade - ID: 309
+Exidy Sorcerer - ID: 236
+Fairchild Channel F - ID: 127
+Family Computer - ID: 99
+Family Computer Disk System - ID: 51
+Ferranti Nimrod Computer - ID: 101
+FM Towns - ID: 118
+FM-7 - ID: 152
+Gamate - ID: 378
+Game & Watch - ID: 307
+Game Boy - ID: 33
+Game Boy Advance - ID: 24
+Game Boy Color - ID: 22
+Game.com - ID: 379
+Gear VR - ID: 388
+Gizmondo - ID: 474
+Google Stadia - ID: 170
+Handheld Electronic LCD - ID: 411
+HP 2100 - ID: 104
+HP 3000 - ID: 105
+Hyper Neo Geo 64 - ID: 135
+HyperScan - ID: 407
+Imlac PDS-1 - ID: 111
+Intellivision - ID: 67
+Intellivision Amico - ID: 382
+iOS - ID: 39
+LaserActive - ID: 487
+Leapster - ID: 412
+Leapster Explorer/LeadPad Explorer - ID: 413
+LeapTV - ID: 414
+Legacy Computer - ID: 409
+Legacy Mobile Device - ID: 55
+Linux - ID: 3
+Mac - ID: 14
+Mega Duck/Cougar Boy - ID: 408
+Meta Quest 2 - ID: 386
+Meta Quest 3 - ID: 471
+Microcomputer - ID: 112
+Microvision - ID: 89
+MSX - ID: 27
+MSX2 - ID: 53
+N-Gage - ID: 42
+NEC PC-6000 Series - ID: 157
+Neo Geo AES - ID: 80
+Neo Geo CD - ID: 136
+Neo Geo MVS - ID: 79
+Neo Geo Pocket - ID: 119
+Neo Geo Pocket Color - ID: 120
+New Nintendo 3DS - ID: 137
+Nintendo 3DS - ID: 37
+Nintendo 64 - ID: 4
+Nintendo DS - ID: 20
+Nintendo DSi - ID: 159
+Nintendo Entertainment System - ID: 18
+Nintendo GameCube - ID: 21
+Nintendo Switch - ID: 130
+Nintendo Switch 2 - ID: 508
+Nuon - ID: 122
+Oculus Go - ID: 387
+Oculus Quest - ID: 384
+Oculus Rift - ID: 385
+Oculus VR - ID: 162
+Odyssey - ID: 88
+Odyssey 2 / Videopac G7000 - ID: 133
+OnLive Game System - ID: 113
+OOParts - ID: 372
+Ouya - ID: 72
+Palm OS - ID: 417
+Panasonic Jungle - ID: 477
+Panasonic M2 - ID: 478
+PC (Microsoft Windows) - ID: 6
+PC Engine SuperGrafx - ID: 128
+PC-50X Family - ID: 142
+PC-8800 Series - ID: 125
+PC-9800 Series - ID: 149
+PC-FX - ID: 274
+PDP-1 - ID: 95
+PDP-10 - ID: 96
+PDP-11 - ID: 108
+PDP-7 - ID: 103
+PDP-8 - ID: 97
+Philips CD-i - ID: 117
+PLATO - ID: 110
+Playdate - ID: 381
+Playdia - ID: 308
+PlayStation - ID: 7
+PlayStation 2 - ID: 8
+PlayStation 3 - ID: 9
+PlayStation 4 - ID: 48
+PlayStation 5 - ID: 167
+PlayStation Portable - ID: 38
+PlayStation Vita - ID: 46
+PlayStation VR - ID: 165
+PlayStation VR2 - ID: 390
+Plug & Play - ID: 377
+PocketStation - ID: 441
+Pokémon mini - ID: 166
+Polymega - ID: 509
+R-Zone - ID: 475
+Satellaview - ID: 306
+SDS Sigma 7 - ID: 106
+Sega 32X - ID: 30
+Sega CD - ID: 78
+Sega CD 32X - ID: 482
+Sega Game Gear - ID: 35
+Sega Master System/Mark III - ID: 64
+Sega Mega Drive/Genesis - ID: 29
+Sega Pico - ID: 339
+Sega Saturn - ID: 32
+SG-1000 - ID: 84
+Sharp MZ-2200 - ID: 374
+Sharp X1 - ID: 77
+Sharp X68000 - ID: 121
+Sinclair QL - ID: 406
+Sinclair ZX81 - ID: 373
+Sol-20 - ID: 237
+SteamVR - ID: 163
+Super A'Can - ID: 480
+Super Famicom - ID: 58
+Super NES CD-ROM System - ID: 131
+Super Nintendo Entertainment System - ID: 19
+SwanCrystal - ID: 124
+Tapwave Zodiac - ID: 44
+Tatung Einstein - ID: 155
+Terebikko / See 'n Say Video Phone - ID: 479
+Texas Instruments TI-99 - ID: 129
+Thomson MO5 - ID: 156
+Tomy Tutor / Pyuta / Grandstand Tutor - ID: 481
+TRS-80 - ID: 126
+TRS-80 Color Computer - ID: 151
+TurboGrafx-16/PC Engine - ID: 86
+Turbografx-16/PC Engine CD - ID: 150
+Uzebox - ID: 504
+V.Smile - ID: 439
+VC 4000 - ID: 138
+Vectrex - ID: 70
+Virtual Boy - ID: 87
+Virtual Console - ID: 47
+visionOS - ID: 472
+Visual Memory Unit / Visual Memory System - ID: 440
+Watara/QuickShot Supervision - ID: 415
+Web browser - ID: 82
+Wii - ID: 5
+Wii U - ID: 41
+Windows Mixed Reality - ID: 161
+Windows Mobile - ID: 405
+Windows Phone - ID: 74
+WonderSwan - ID: 57
+WonderSwan Color - ID: 123
+Xbox - ID: 11
+Xbox 360 - ID: 12
+Xbox One - ID: 49
+Xbox Series X|S - ID: 169
+Zeebo - ID: 240
+ZX Spectrum - ID: 26
+
+GAME MODE:
+
+Battle Royale - ID: 6
+Co-operative - ID: 3
+Massively Multiplayer Online (MMO) - ID: 5
+Multiplayer - ID: 2
+Single player - ID: 1
+Split screen - ID: 4
+
+GAME TYPE:
+
+Bundle - ID: 3
+DLC - ID: 1
+Episode - ID: 6
+Expanded Game - ID: 10
+Expansion - ID: 2
+Fork - ID: 12
+Main Game - ID: 0
+Mod - ID: 5
+Pack / Addon - ID: 13
+Port - ID: 11
+Remake - ID: 8
+Remaster - ID: 9
+Season - ID: 7
+Standalone Expansion - ID: 4
+Update - ID: 14
+
+PERSPECTIVE:
+
+Auditory - ID: 6
+Bird view / Isometric - ID: 3
+First person - ID: 1
+Side view - ID: 4
+Text - ID: 5
+Third person - ID: 2
+Virtual Reality - ID: 7
+
+UM MILHÃO de keywords
+KEYWORDS POPULARES NOS 500 JOGOS MAIS BEM AVALIADOS:
+
+death - ID: 558
+digital distribution - ID: 4134
+boss fight - ID: 3486
+voice acting - ID: 4287
+polygonal 3d - ID: 4359
+original soundtrack release - ID: 4541
+real-time combat - ID: 4918
+steam - ID: 1158
+bloody - ID: 129
+male protagonist - ID: 23933
+melee - ID: 4891
+action-adventure - ID: 1033
+explosion - ID: 3831
+sequel - ID: 2071
+non-player character - ID: 4613
+achievements - ID: 1293
+human - ID: 4353
+mercenary - ID: 5323
+multiple endings - ID: 1313
+single-player only - ID: 4138
+artificial intelligence - ID: 1440
+difficulty level - ID: 5029
+bow and arrow - ID: 4392
+robots - ID: 575
+playstation trophies - ID: 4245
+exploration - ID: 72
+magic - ID: 226
+female protagonist - ID: 962
+side quests - ID: 4852
+greatest hits - ID: 9529
+bink video - ID: 4345
+upgradeable weapons - ID: 4397
+murder - ID: 221
+downloadable content - ID: 4869
+steam achievements - ID: 4004
+aliens - ID: 3
+multiple protagonists - ID: 1186
+leveling up - ID: 4284
+online - ID: 1333
+swimming - ID: 2324
+day/night cycle - ID: 2452
+shopping - ID: 4388
+rpg elements - ID: 5308
+easter egg - ID: 1898
+teleportation - ID: 1986
+collectibles - ID: 4484
+darkness - ID: 3203
+wasd movement - ID: 4580
+save point - ID: 4709
+moral decisions - ID: 4850
+been here before - ID: 5599
+snow - ID: 1710
+sword & sorcery - ID: 2472
+silent protagonist - ID: 2199
+anthropomorphism - ID: 4162
+profanity - ID: 4615
+villain - ID: 5587
+plot twist - ID: 5963
+minigames - ID: 274
+world map - ID: 4285
+instant kill - ID: 4990
+backtracking - ID: 1289
+steam cloud - ID: 4150
+rivaling factions - ID: 4250
+sprinting mechanics - ID: 4711
+ghosts - ID: 16
+xbox controller support for pc - ID: 4135
+throwing weapons - ID: 4179
+betrayal - ID: 4998
+turn-based - ID: 415
+saving the world - ID: 4843
+undead - ID: 1320
+dialogue trees - ID: 1523
+good vs evil - ID: 2242
+playstation plus - ID: 4726
+a.i. companion - ID: 4956
+linear gameplay - ID: 6137
+medieval - ID: 151
+traps - ID: 1345
+underwater gameplay - ID: 4940
+auto-saving - ID: 4897
+scripted events - ID: 6620
+fan translation - portuguese - ID: 30703
+potion - ID: 4879
+xbox one backwards compatibility - ID: 5633
+poisoning - ID: 6541
+corpse - ID: 4637
+treasure chest - ID: 4787
+games on demand - ID: 5783
+horse - ID: 623
+steam trading cards - ID: 1494
+60 fps on consoles - ID: 4282
+breaking the fourth wall - ID: 4398
+descendants of other characters - ID: 4622
+branching storyline - ID: 4855
+military - ID: 563
+platform exclusive - ID: 4239
+customizable characters - ID: 4272
+unlockables - ID: 4544
+male antagonist - ID: 4974
+Anime - ID: 78
+roguelike - ID: 416
+roguelite - ID: 17292
+roguelike deckbuilder - ID: 27419
+action roguelike - ID: 41781
