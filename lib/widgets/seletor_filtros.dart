@@ -4,7 +4,7 @@
 // expansível ao final da lista de básicos).
 //
 // Widget "controlado": recebe o ParametrosBusca (mutável) e
-// chama onChanged() sempre que algo muda, pra tela
+// chama onChanged() sempre que algo muda, pro pai (a tela)
 // conseguir atualizar a badge de filtros ativos.
 // ============================================================
 import 'package:flutter/material.dart';
