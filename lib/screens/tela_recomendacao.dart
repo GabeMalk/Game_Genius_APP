@@ -9,6 +9,7 @@ import '../models/parametros_busca.dart';
 import '../services/game_repository.dart';
 import '../services/historico_service.dart';
 import '../widgets/seletor_filtros.dart';
+import '../theme/cores_app.dart';
 
 class TelaRecomendacao extends StatefulWidget {
   const TelaRecomendacao({super.key});
@@ -18,7 +19,7 @@ class TelaRecomendacao extends StatefulWidget {
 }
 
 class _TelaRecomendacaoState extends State<TelaRecomendacao>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   // ============================================================
   // DEPENDÊNCIAS (serviços e modelos)
   // ============================================================
@@ -34,6 +35,14 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
   final ParametrosBusca _parametros = ParametrosBusca();
 
   // ============================================================
+  // TEMPOS - LEMBRA DE AUMENTAR DEPOIS
+  // ============================================================
+  // Delay minimo da busca
+  static const Duration _duracaoEsperaMinima = Duration(milliseconds: 30);
+  // Espera da animação
+  static const Duration _duracaoAnimacaoRevelacao = Duration(milliseconds: 22);
+
+  // ============================================================
   // ESTADO DA TELA
   // ============================================================
 
@@ -43,11 +52,18 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
   List<int> _historicoIds = [];   // IDs já recomendados (carregados do storage)
 
   // ============================================================
-  // ANIMAÇÃO (mantida igual ao original)
+  // ANIMAÇÃO
   // ============================================================
   late final AnimationController _animController = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 1400),
+    duration:  _duracaoAnimacaoRevelacao,
+  ); // Animation Controler
+
+  // Controller dedicado só pra barra de progresso do
+  // loading — duração igual ao delay mínimo, pra encher "certinho".
+  late final AnimationController _loadingController = AnimationController(
+    vsync: this,
+    duration: _duracaoEsperaMinima,
   );
 
   late final Animation<double> _imagemScale = Tween<double>(
@@ -97,6 +113,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
   @override
   void dispose() {
     _animController.dispose();
+    _loadingController.dispose();
     super.dispose();
   }
 
@@ -117,7 +134,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
   void _abrirFiltros() {
     showModalBottomSheet(
       context: context,
-      backgroundColor: const Color(0xFF1E1B2E),
+      backgroundColor: CoresApp.superficie,
       isScrollControlled: true,
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.75,
@@ -166,7 +183,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
-                        'Toque 1x para 👍 incluir, 2x para 👎 excluir, 3x para limpar.',
+                        'Toque 1x para incluir, 2x para excluir, 3x para limpar.',
                         style: TextStyle(fontSize: 13, color: Colors.grey.shade400),
                       ),
                     ),
@@ -218,13 +235,18 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
       _carregando = true;
       _mensagemErro = null;
     });
+    _loadingController.forward(from: 0); // Dispara a barra de progresso
 
     try {
       // Chama o repositório passando os parâmetros atuais e o histórico
-      final jogo = await _repository.buscarRecomendacao(
-        parametros: _parametros,
-        historicoIds: _historicoIds,
-      );
+      final resultados = await Future.wait([
+        _repository.buscarRecomendacao(
+          parametros: _parametros,
+          historicoIds: _historicoIds,
+        ),
+        Future.delayed(_duracaoEsperaMinima), // Delay minimo
+      ]);
+      final jogo = resultados[0] as Jogo;
 
       // Adiciona o ID do jogo retornado ao histórico local e persistido
       final novosIds = await _historicoService.adicionar(jogo.id);
@@ -232,23 +254,28 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
       setState(() {
         _jogoSugerido = jogo;
         _historicoIds = novosIds;
-        _carregando = false;
       });
 
       // Dispara a animação
       _animController.forward(from: 0);
+       await Future.delayed(_duracaoAnimacaoRevelacao);
+       if (mounted) setState(() => _carregando = false);
     } on NenhumJogoEncontradoException catch (e) {
       // Erro esperado: nenhum jogo encontrado com esses filtros
-      setState(() {
-        _carregando = false;
-        _mensagemErro = e.mensagem;
-      });
+      if (mounted) {
+        setState(() {
+          _carregando = false;
+          _mensagemErro = e.mensagem;
+        });
+      }
     } catch (e) {
-      // Outros erros (rede, Worker fora do ar, etc.)
-      setState(() {
-        _carregando = false;
-        _mensagemErro = 'Erro ao buscar recomendação. Tente novamente.';
-      });
+      // Outros erros
+      if (mounted) {
+        setState(() {
+          _carregando = false;
+          _mensagemErro = 'Erro ao buscar recomendação. Tente novamente.';
+        });
+      }
     }
   }
 
@@ -270,13 +297,37 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
     }
   }
 
+  // Sobre — autoria + atribuição à IGDB.
+  void _abrirSobre() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: CoresApp.superficie,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('Sobre o IndicaJogo', style: TextStyle(color: Colors.white)),
+        content: Text(
+          'Feito por Malk.\n\n'
+          'Dados de jogos fornecidos pela IGDB.com.',
+          style: TextStyle(color: Colors.grey.shade300, height: 1.5),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('Fechar', style: TextStyle(color: CoresApp.primaria.shade200)),
+          ),
+        ],
+      ),
+    );
+  }
+
+
   // ============================================================
   // CONSTRUÇÃO DA UI
   // ============================================================
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF121018),
+      backgroundColor: CoresApp.fundo,
       appBar: AppBar(
         leading: IconButton(
           onPressed: _voltarParaInicio,
@@ -287,10 +338,18 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
           '🎮 IndicaJogo',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: CoresApp.primaria,
         foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
+        actions: [
+          // Ícone de opções — por hora só abre o "Sobre".
+          IconButton(
+            onPressed: _abrirSobre,
+            icon: const Icon(Icons.more_vert),
+            tooltip: 'Sobre',
+          ),
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -317,7 +376,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
   // Decide o que mostrar no centro: estado inicial, erro, jogo ou loading
   Widget _buildConteudoCentral() {
     if (_carregando && _jogoSugerido == null) {
-      return _buildEstadoInicial(); // mostra tela inicial enquanto carrega
+      return _buildCarregando();
     }
     if (_mensagemErro != null && _jogoSugerido == null) {
       return _buildMensagemErro();
@@ -344,12 +403,43 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
     );
   }
 
+ Widget _buildCarregando() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Icons.casino, size: 56, color: CoresApp.primaria.shade200),
+        const SizedBox(height: 24),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: AnimatedBuilder(
+              animation: _loadingController,
+              builder: (context, _) => LinearProgressIndicator(
+                value: _loadingController.value,
+                minHeight: 8,
+                backgroundColor: Colors.white.withValues(alpha: 0.1),
+                valueColor: AlwaysStoppedAnimation(CoresApp.primaria),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Text(
+          'Buscando um jogo pra você...',
+          style: TextStyle(fontSize: 15, color: Colors.grey.shade400),
+        ),
+      ],
+    );
+  }
+
+
   // Exibe a mensagem de erro (ex: "Nenhum jogo encontrado")
   Widget _buildMensagemErro() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(Icons.search_off, size: 64, color: Colors.deepPurple.shade200),
+        Icon(Icons.search_off, size: 64, color: CoresApp.primaria.shade200),
         const SizedBox(height: 16),
         Text(
           _mensagemErro!,
@@ -368,11 +458,11 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
         return SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
-              color: const Color(0xFF1E1B2E),
+              color: CoresApp.superficie,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.deepPurple.withValues(alpha: 0.25),
+                  color: CoresApp.primaria.withValues(alpha: 0.25),
                   blurRadius: 20,
                   offset: const Offset(0, 8),
                 ),
@@ -390,21 +480,21 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
                     scale: _imagemScale,
                     alignment: Alignment.center,
                     child: AspectRatio(
-                      aspectRatio: 16 / 9,
+                      aspectRatio: 227 / 320,
                       child: Image.network(
                         jogo.imagemUrl ?? '', // url já tratada pelo Worker
                         fit: BoxFit.cover,
                         loadingBuilder: (context, child, progress) {
                           if (progress == null) return child;
                           return Container(
-                            color: Colors.deepPurple.shade900,
+                            color: CoresApp.primaria.shade900,
                             child: const Center(
                               child: CircularProgressIndicator(color: Colors.white70),
                             ),
                           );
                         },
                         errorBuilder: (context, error, stackTrace) => Container(
-                          color: Colors.deepPurple.shade900,
+                          color: CoresApp.primaria.shade900,
                           child: const Center(
                             child: Icon(Icons.broken_image_outlined, size: 48, color: Colors.white54),
                           ),
@@ -423,20 +513,6 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // Gêneros e temas (usando o getter generosLabel)
-                          if (jogo.generosLabel.isNotEmpty)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 12),
-                              child: Text(
-                                jogo.generosLabel,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.deepPurple.shade100,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
                           // Nome do jogo
                           Text(
                             jogo.nome,
@@ -448,6 +524,20 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
                             ),
                           ),
                           const SizedBox(height: 10),
+                          // Gêneros e temas (usando o getter generosLabel)
+                          if (jogo.generosLabel.isNotEmpty)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: Text(
+                                jogo.generosLabel,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: CoresApp.primaria.shade100,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
                           // Sinopse
                           if (jogo.sinopse != null && jogo.sinopse!.isNotEmpty)
                             Text(
@@ -470,7 +560,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
                                 label: const Text('Ver na loja'),
                                 style: OutlinedButton.styleFrom(
                                   foregroundColor: Colors.white,
-                                  side: BorderSide(color: Colors.deepPurple.shade200),
+                                  side: BorderSide(color: CoresApp.primaria.shade200),
                                   padding: const EdgeInsets.symmetric(vertical: 12),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12),
@@ -499,7 +589,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
     return TextButton(
       onPressed: _abrirFiltros,
       style: TextButton.styleFrom(
-        foregroundColor: Colors.deepPurple.shade100,
+        foregroundColor: CoresApp.primaria.shade100, 
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       ),
       child: Row(
@@ -512,7 +602,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: Colors.deepPurple.shade100,
+              color: CoresApp.primaria.shade100, 
             ),
           ),
           if (temFiltro) ...[
@@ -520,7 +610,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
               decoration: BoxDecoration(
-                color: Colors.deepPurple,
+                color: CoresApp.primaria,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(
@@ -556,7 +646,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
             : const Icon(Icons.casino),
         label: Text(_carregando ? 'Buscando...' : 'Me indica um jogo!'),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: CoresApp.primaria,
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16),
           textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

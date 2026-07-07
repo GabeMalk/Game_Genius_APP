@@ -32,7 +32,7 @@ class Jogo {
   // ---- GETTER (PROPRIEDADE CALCULADA) ----
 
   // Concatena gêneros e temas em uma única string separada por " • ".
-  // Exemplo: "RPG • Fantasia • Ação"
+  // Eu matei essa função mas deixei aqui a possibilidade de reintegrar, simplesmente não gosto de como estava
   String get generosLabel => [...generos, ...temas].join(' • ');
   // [...] spread operator: junta as duas listas em uma só.
   // .join(' • ') junta os elementos da lista em uma string, usando " • " entre eles.

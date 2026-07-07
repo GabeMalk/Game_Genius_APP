@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 import '../models/filtro.dart';
 import '../models/parametros_busca.dart';
+import '../theme/cores_app.dart';
 
 // SeletorFiltros é um StatefulWidget porque precisa manter estado
 // interno (ex: se a seção de avançados está expandida ou não).
@@ -124,29 +125,57 @@ class _SeletorFiltrosState extends State<SeletorFiltros> {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.bold,
-          color: Colors.deepPurple.shade100,
+          color: CoresApp.primaria.shade100,
           letterSpacing: 0.5,
         ),
       ),
     );
   }
 
-  // Widget auxiliar que cria um chip de seleção (ChoiceChip).
+  // Widget auxiliar que cria um chip de seleção.
   // Parâmetros:
   // - label: texto exibido no chip
   // - selecionada: se true, chip aparece com cor de destaque
   // - onTap: função chamada quando o chip é tocado
-  Widget _buildChip({required String label, required bool selecionada, required VoidCallback onTap}) {
-    return ChoiceChip(
-      label: Text(label),
-      selected: selecionada,
-      // Quando o chip é tocado, o callback onSelected é chamado com o novo valor.
-      // Como não precisamos do valor, usamos (_) para ignorá-lo e chamamos onTap.
-      onSelected: (_) => onTap(),
-      selectedColor: Colors.deepPurple,
-      labelStyle: TextStyle(color: selecionada ? Colors.white : Colors.grey.shade300),
-      backgroundColor: Colors.white.withValues(alpha: 0.05),
-      side: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
+  // - icone: parâmetro opcional — mostra um ícone antes do texto
+  Widget _buildChip({
+    required String label,
+    required bool selecionada,
+    required VoidCallback onTap,
+    IconData? icone, // 🆕 NOVO
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        decoration: BoxDecoration(
+          // Fundo sólido (cor primária) quando selecionado, ou um
+          // cinza bem sutil quando não — nunca branco/claro.
+          color: selecionada ? CoresApp.primaria : Colors.white.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: selecionada ? CoresApp.primaria : Colors.white.withValues(alpha: 0.15),
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // 🆕 NOVO: só desenha o ícone se ele foi passado.
+            if (icone != null) ...[
+              Icon(icone, size: 16, color: selecionada ? Colors.white : Colors.grey.shade300),
+              const SizedBox(width: 6),
+            ],
+            Text(
+              label,
+              style: TextStyle(
+                color: selecionada ? Colors.white : Colors.grey.shade300,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -159,6 +188,7 @@ class _SeletorFiltrosState extends State<SeletorFiltros> {
         children: catalogoDePlataformas.map((p) {
           return _buildChip(
             label: p.label,
+            icone: Icons.computer, // Ícone de telinha pro PC
             // Verifica se esta plataforma é a que está selecionada.
             selecionada: widget.parametros.plataforma == p.id,
             onTap: () {
@@ -195,6 +225,8 @@ class _SeletorFiltrosState extends State<SeletorFiltros> {
   Widget _buildModoJogo() {
     // Mapa local: chave 'single'/'multi' -> label exibido.
     const opcoes = {'single': 'Single player', 'multi': 'Multiplayer'};
+    // Mapa de ícones — pessoinha pro single, galerinha pro multi.
+    const icones = {'single': Icons.person, 'multi': Icons.groups};
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Wrap(
@@ -203,6 +235,7 @@ class _SeletorFiltrosState extends State<SeletorFiltros> {
         children: opcoes.entries.map((entry) {
           return _buildChip(
             label: entry.value,
+            icone: icones[entry.key],
             // Selecionado se o modoJogo atual for igual à chave.
             selecionada: widget.parametros.modoJogo == entry.key,
             onTap: () => _alternarModoJogo(entry.key),
@@ -220,11 +253,11 @@ class _SeletorFiltrosState extends State<SeletorFiltros> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         child: Row(
           children: [
-            Icon(Icons.refresh, size: 18, color: Colors.deepPurple.shade200),
+            Icon(Icons.refresh, size: 18, color: CoresApp.primaria.shade200), 
             const SizedBox(width: 10),
             Text(
               'Limpar filtros',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.deepPurple.shade100),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: CoresApp.primaria.shade100), 
             ),
           ],
         ),
@@ -303,12 +336,12 @@ class _SeletorFiltrosState extends State<SeletorFiltros> {
             Icon(
               _mostrarAvancados ? Icons.expand_less : Icons.expand_more,
               size: 20,
-              color: Colors.deepPurple.shade200,
+              color: CoresApp.primaria.shade200,
             ),
             const SizedBox(width: 10),
             Text(
               _mostrarAvancados ? 'Ocultar avançados' : 'Avançados',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.deepPurple.shade100),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: CoresApp.primaria.shade100), // 🔧 ALTERADO
             ),
           ],
         ),
