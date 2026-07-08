@@ -4,11 +4,13 @@
 // ============================================================
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:indicador_jogos/l10n/app_localizations.dart';
 import '../models/jogo.dart';
 import '../models/parametros_busca.dart';
 import '../services/game_repository.dart';
 import '../services/historico_service.dart';
 import '../widgets/seletor_filtros.dart';
+import '../widgets/banner_ad_widget.dart';
 import '../theme/cores_app.dart';
 
 class TelaRecomendacao extends StatefulWidget {
@@ -38,9 +40,9 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
   // TEMPOS - LEMBRA DE AUMENTAR DEPOIS
   // ============================================================
   // Delay minimo da busca
-  static const Duration _duracaoEsperaMinima = Duration(milliseconds: 30);
+  static const Duration _duracaoEsperaMinima = Duration(milliseconds: 3000);
   // Espera da animação
-  static const Duration _duracaoAnimacaoRevelacao = Duration(milliseconds: 22);
+  static const Duration _duracaoAnimacaoRevelacao = Duration(milliseconds: 2200);
 
   // ============================================================
   // ESTADO DA TELA
@@ -132,6 +134,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
 
   // Abre o modal de filtros usando o novo SeletorFiltros
   void _abrirFiltros() {
+    final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
       backgroundColor: CoresApp.superficie,
@@ -162,14 +165,14 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
                       ),
                     ),
                     // Título
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.fromLTRB(20, 16, 20, 4),
                       child: Row(
                         children: [
                           Icon(Icons.tune, color: Colors.white, size: 20),
                           SizedBox(width: 8),
                           Text(
-                            'Personalizar busca',
+                            l10n.personalizarBuscaTitulo,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -183,7 +186,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
-                        'Toque 1x para incluir, 2x para excluir, 3x para limpar.',
+                        l10n.dicaFiltros,
                         style: TextStyle(fontSize: 13, color: Colors.grey.shade400),
                       ),
                     ),
@@ -260,12 +263,12 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
       _animController.forward(from: 0);
        await Future.delayed(_duracaoAnimacaoRevelacao);
        if (mounted) setState(() => _carregando = false);
-    } on NenhumJogoEncontradoException catch (e) {
+    } on NenhumJogoEncontradoException catch (_) {
       // Erro esperado: nenhum jogo encontrado com esses filtros
       if (mounted) {
         setState(() {
           _carregando = false;
-          _mensagemErro = e.mensagem;
+          _mensagemErro = AppLocalizations.of(context)!.nenhumJogoEncontrado;
         });
       }
     } catch (e) {
@@ -273,7 +276,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
       if (mounted) {
         setState(() {
           _carregando = false;
-          _mensagemErro = 'Erro ao buscar recomendação. Tente novamente.';
+          _mensagemErro = AppLocalizations.of(context)!.erroBuscaGenerico;
         });
       }
     }
@@ -288,7 +291,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Não foi possível abrir o link: $url'),
+            content: Text(AppLocalizations.of(context)!.erroAbrirLink(url)),
             backgroundColor: Colors.redAccent,
             behavior: SnackBarBehavior.floating,
           ),
@@ -297,23 +300,27 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
     }
   }
 
-  // Sobre — autoria + atribuição à IGDB.
-  void _abrirSobre() {
+  // Cobre com atribuição e um dialog com o
+  // toggle de "Modo noturno" além do texto de atribuição.
+  // Usa StatefulBuilder porque o dialog é uma "rota" própria — sem
+  // isso, o Switch não conseguiria se redesenhar sozinho ao tocar.
+  void _abrirOpcoes() {
+    final l10n = AppLocalizations.of(context)!;
+    
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: CoresApp.superficie,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Sobre o IndicaJogo', style: TextStyle(color: Colors.white)),
+        title: Text(l10n.opcoesTitulo, style: TextStyle(color: Colors.white)),
         content: Text(
-          'Feito por Malk.\n\n'
-          'Dados de jogos fornecidos pela IGDB.com.',
+          l10n.sobreTexto,
           style: TextStyle(color: Colors.grey.shade300, height: 1.5),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('Fechar', style: TextStyle(color: CoresApp.primaria.shade200)),
+            child: Text(l10n.fechar, style: TextStyle(color: CoresApp.primaria.shade200)),
           ),
         ],
       ),
@@ -328,34 +335,13 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CoresApp.fundo,
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: _voltarParaInicio,
-          icon: const Icon(Icons.home_rounded),
-          tooltip: 'Início',
-        ),
-        title: const Text(
-          '🎮 IndicaJogo',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: CoresApp.primaria,
-        foregroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        actions: [
-          // Ícone de opções — por hora só abre o "Sobre".
-          IconButton(
-            onPressed: _abrirSobre,
-            icon: const Icon(Icons.more_vert),
-            tooltip: 'Sobre',
-          ),
-        ],
-      ),
+      // Cabeçalho customizado (_buildTopo) logo abaixo, abrindo espaço pro banner de anúncio.
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           child: Column(
             children: [
+              _buildTopo(),
               Expanded(
                 child: Center(
                   child: _buildConteudoCentral(),
@@ -373,11 +359,39 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
     );
   }
 
-  // Decide o que mostrar no centro: estado inicial, erro, jogo ou loading
-  Widget _buildConteudoCentral() {
-    if (_carregando && _jogoSugerido == null) {
-      return _buildCarregando();
-    }
+  // Cabeçalho customizado — home à esquerda, espaço
+  // reservado pro banner de anúncio no meio, opções à direita.
+   Widget _buildTopo() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: _voltarParaInicio,
+            icon: const Icon(Icons.home_rounded, color: Colors.white),
+            tooltip: 'Início',
+          ),
+          Expanded(
+            child: Center(
+              // 🔧 ALTERADO: era um Container placeholder cinza,
+              // agora é o banner de verdade do AdMob.
+              child: const BannerAdWidget(),
+            ),
+          ),
+          IconButton(
+            onPressed: _abrirOpcoes,
+            icon: const Icon(Icons.more_vert, color: Colors.white),
+            tooltip: 'Opções',
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Decide o que mostrar no centro
+ Widget _buildConteudoCentral() {
+    // O centro simplesmente continua mostrando o que já tinha (o
+    // card antigo, ou o estado inicial) enquanto uma nova busca roda.
     if (_mensagemErro != null && _jogoSugerido == null) {
       return _buildMensagemErro();
     }
@@ -388,46 +402,17 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
   }
 
   Widget _buildEstadoInicial() {
+    final l10n = AppLocalizations.of(context)!; 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(Icons.videogame_asset_outlined,
-            size: 72, color: Colors.deepPurple.shade200),
-        const SizedBox(height: 16),
-        const Text(
-          'Clique no botão abaixo para\nreceber uma indicação!',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18, color: Colors.grey, height: 1.4),
-        ),
-      ],
-    );
-  }
-
- Widget _buildCarregando() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(Icons.casino, size: 56, color: CoresApp.primaria.shade200),
-        const SizedBox(height: 24),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: AnimatedBuilder(
-              animation: _loadingController,
-              builder: (context, _) => LinearProgressIndicator(
-                value: _loadingController.value,
-                minHeight: 8,
-                backgroundColor: Colors.white.withValues(alpha: 0.1),
-                valueColor: AlwaysStoppedAnimation(CoresApp.primaria),
-              ),
-            ),
-          ),
-        ),
+            size: 72, color: const Color.fromARGB(255, 12, 171, 89)),
         const SizedBox(height: 16),
         Text(
-          'Buscando um jogo pra você...',
-          style: TextStyle(fontSize: 15, color: Colors.grey.shade400),
+          l10n.estadoInicialTexto,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 18, color: Colors.grey, height: 1.4),
         ),
       ],
     );
@@ -452,6 +437,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
 
   // Card do jogo com animação (mantido igual, mas adaptado para os novos campos)
   Widget _buildCardJogo(Jogo jogo) {
+    final l10n = AppLocalizations.of(context)!;
     return AnimatedBuilder(
       animation: _animController,
       builder: (context, child) {
@@ -557,7 +543,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
                               child: OutlinedButton.icon(
                                 onPressed: () => _abrirLoja(jogo.linkLoja!),
                                 icon: const Icon(Icons.shopping_bag_outlined, size: 18),
-                                label: const Text('Ver na loja'),
+                                label: Text(l10n.botaoVerNaLoja),
                                 style: OutlinedButton.styleFrom(
                                   foregroundColor: Colors.white,
                                   side: BorderSide(color: CoresApp.primaria.shade200),
@@ -583,6 +569,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
 
   // Botão "Filtrar" com badge de quantidade de filtros ativos
   Widget _buildBotaoFiltrar() {
+    final l10n = AppLocalizations.of(context)!;
     final quantidade = _quantidadeFiltrosAtivos;
     final temFiltro = quantidade > 0;
 
@@ -598,9 +585,9 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
           const Icon(Icons.tune, size: 16),
           const SizedBox(width: 6),
           Text(
-            'Filtrar',
+            l10n.filtrarBotao,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 20,
               fontWeight: FontWeight.w600,
               color: CoresApp.primaria.shade100, 
             ),
@@ -629,27 +616,45 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
   }
 
   // Botão principal "Me indica um jogo!"
-  Widget _buildBotao() {
+  // Agora, enquanto carrega, o BOTÃO INTEIRO vira
+  // uma barra de progresso grossa no mesmo espaço
+  // na primeira busca e nas seguintes.
+   Widget _buildBotao() {
+    if (_carregando) {
+      return SizedBox(
+        width: double.infinity,
+        height: 56, // aprox. a mesma altura do ElevatedButton abaixo
+        child: Center(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: AnimatedBuilder(
+              animation: _loadingController,
+              builder: (context, _) => LinearProgressIndicator(
+                value: _loadingController.value,
+                minHeight: 18, // barra grossa, não mais uma rodinha fina
+                backgroundColor: Colors.white.withValues(alpha: 0.08),
+                valueColor: AlwaysStoppedAnimation(CoresApp.primaria),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    final l10n = AppLocalizations.of(context)!;
+
+
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton.icon(
-        onPressed: _carregando ? null : _sortearJogo,
-        icon: _carregando
-            ? const SizedBox(
-                width: 18,
-                height: 18,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: Colors.white,
-                ),
-              )
-            : const Icon(Icons.casino),
-        label: Text(_carregando ? 'Buscando...' : 'Me indica um jogo!'),
+        onPressed: _sortearJogo,
+        icon: const Icon(Icons.casino),
+        label: Text(l10n.botaoSortear),
         style: ElevatedButton.styleFrom(
           backgroundColor: CoresApp.primaria,
           foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          padding: const EdgeInsets.symmetric(vertical: 18),
+          textStyle: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),

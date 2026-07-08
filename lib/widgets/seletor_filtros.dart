@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import '../models/filtro.dart';
 import '../models/parametros_busca.dart';
 import '../theme/cores_app.dart';
+import 'package:indicador_jogos/l10n/app_localizations.dart';
 
 // SeletorFiltros é um StatefulWidget porque precisa manter estado
 // interno (ex: se a seção de avançados está expandida ou não).
@@ -77,39 +78,39 @@ class _SeletorFiltrosState extends State<SeletorFiltros> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     // ListView permite rolagem quando os filtros não cabem na tela.
     return ListView(
       padding: const EdgeInsets.symmetric(vertical: 8),
+      // Cada _buildSecao cria um título de seção (Plataforma, Época, etc.)
       children: [
-        // Cada _buildSecao cria um título de seção (Plataforma, Época, etc.)
-        _buildSecao('Plataforma'),
+        
+        _buildSecao(l10n.secaoPlataforma),
         _buildPlataforma(),
         const SizedBox(height: 8),
 
-        _buildSecao('Época'),
-        _buildEras(),
+        _buildSecao(l10n.secaoEpoca),
+        _buildEras(l10n),
         const SizedBox(height: 8),
 
-        _buildSecao('Jogadores'),
-        _buildModoJogo(),
+        _buildSecao(l10n.secaoJogadores),
+        _buildModoJogo(l10n),
 
         // Divisor visual (linha tênue)
         Divider(color: Colors.white.withValues(alpha: 0.08), height: 32),
 
         // Botão "Limpar filtros"
-        _buildLimparFiltros(),
+        _buildLimparFiltros(l10n),
         Divider(color: Colors.white.withValues(alpha: 0.08), height: 1),
 
         // Itera sobre a lista de filtros básicos e cria uma linha para cada um.
         // O operador ... (spread) "desempacota" os widgets gerados pelo map
         // dentro da lista children.
-        ...filtrosBasicos.map(_buildLinhaFiltro),
-
+        ...filtrosBasicos.map((f) => _buildLinhaFiltro(f, l10n)), // 🔧
         // Botão "Avançados" / "Ocultar avançados"
-        _buildBotaoAvancados(),
-
+        _buildBotaoAvancados(l10n),
         // Se o estado _mostrarAvancados for true, mostra também os filtros avançados.
-        if (_mostrarAvancados) ...filtrosAvancados.map(_buildLinhaFiltro),
+        if (_mostrarAvancados) ...filtrosAvancados.map((f) => _buildLinhaFiltro(f, l10n)),
 
         const SizedBox(height: 8),
       ],
@@ -203,40 +204,35 @@ class _SeletorFiltrosState extends State<SeletorFiltros> {
   }
 
   // Constrói a seção de eras (lançamentos, atualidade, etc.).
-  Widget _buildEras() {
+  Widget _buildEras(AppLocalizations l10n) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Wrap(
-        spacing: 8,
-        runSpacing: 8, // espaço vertical entre linhas
-        children: catalogoDeEras.map((e) {
+       spacing: 8,
+        runSpacing: 8,
+       children: catalogoDeEras.map((e) {
           return _buildChip(
-            label: e.label,
-            // Verifica se a chave da era está contida no Set de eras selecionadas.
+            label: labelDaEra(l10n, e.chave), // 🔧 era: e.label
             selecionada: widget.parametros.eras.contains(e.chave),
-            onTap: () => _alternarEra(e.chave),
-          );
+          onTap: () => _alternarEra(e.chave),
+         );
         }).toList(),
-      ),
+     ),
     );
   }
 
   // Constrói a seção de modo de jogo (Single player / Multiplayer).
-  Widget _buildModoJogo() {
-    // Mapa local: chave 'single'/'multi' -> label exibido.
-    const opcoes = {'single': 'Single player', 'multi': 'Multiplayer'};
-    // Mapa de ícones — pessoinha pro single, galerinha pro multi.
+  Widget _buildModoJogo(AppLocalizations l10n) {
+    final opcoes = {'single': l10n.modoSingle, 'multi': l10n.modoMulti}; // 🔧 era const Map fixo
     const icones = {'single': Icons.person, 'multi': Icons.groups};
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Wrap(
         spacing: 8,
-        // entries retorna um conjunto de MapEntry (chave, valor).
         children: opcoes.entries.map((entry) {
           return _buildChip(
             label: entry.value,
             icone: icones[entry.key],
-            // Selecionado se o modoJogo atual for igual à chave.
             selecionada: widget.parametros.modoJogo == entry.key,
             onTap: () => _alternarModoJogo(entry.key),
           );
@@ -245,20 +241,18 @@ class _SeletorFiltrosState extends State<SeletorFiltros> {
     );
   }
 
+
   // Botão "Limpar filtros" com ícone de refresh.
-  Widget _buildLimparFiltros() {
+  Widget _buildLimparFiltros(AppLocalizations l10n) {
     return InkWell(
-      onTap: widget.onLimparFiltros, // chama o callback do pai
+      onTap: widget.onLimparFiltros,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         child: Row(
           children: [
-            Icon(Icons.refresh, size: 18, color: CoresApp.primaria.shade200), 
+            Icon(Icons.refresh, size: 18, color: CoresApp.primaria.shade200),
             const SizedBox(width: 10),
-            Text(
-              'Limpar filtros',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: CoresApp.primaria.shade100), 
-            ),
+            Text(l10n.limparFiltros, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: CoresApp.primaria.shade100)), // 🔧
           ],
         ),
       ),
@@ -266,8 +260,7 @@ class _SeletorFiltrosState extends State<SeletorFiltros> {
   }
 
   // Constrói uma linha para um filtro do catálogo (ex: "RPG").
-  Widget _buildLinhaFiltro(FiltroInfo info) {
-    // Obtém o estado atual deste filtro (neutro/positivo/negativo).
+  Widget _buildLinhaFiltro(FiltroInfo info, AppLocalizations l10n) {
     final preferencia = widget.parametros.preferenciasFiltros[info.chave] ?? PreferenciaFiltro.neutro;
     return InkWell(
       onTap: () => _alternarPreferencia(info.chave),
@@ -275,19 +268,16 @@ class _SeletorFiltrosState extends State<SeletorFiltros> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         child: Row(
           children: [
-            // O nome do filtro ocupa o espaço disponível.
             Expanded(
               child: Text(
-                info.label,
+                labelDoFiltro(l10n, info.chave), // 🔧 era: info.label
                 style: TextStyle(
                   fontSize: 16,
-                  // Se neutro, cor normal; caso contrário, um pouco mais opaco.
                   color: preferencia == PreferenciaFiltro.neutro ? Colors.white : Colors.white.withValues(alpha: 0.95),
                   fontWeight: preferencia == PreferenciaFiltro.neutro ? FontWeight.normal : FontWeight.w600,
                 ),
               ),
             ),
-            // Ícone animado que muda conforme o estado do filtro.
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 200),
               transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
@@ -326,22 +316,18 @@ class _SeletorFiltrosState extends State<SeletorFiltros> {
   }
 
   // Botão para expandir/recolher a lista de filtros avançados.
-  Widget _buildBotaoAvancados() {
+  Widget _buildBotaoAvancados(AppLocalizations l10n) {
     return InkWell(
       onTap: () => setState(() => _mostrarAvancados = !_mostrarAvancados),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         child: Row(
           children: [
-            Icon(
-              _mostrarAvancados ? Icons.expand_less : Icons.expand_more,
-              size: 20,
-              color: CoresApp.primaria.shade200,
-            ),
+            Icon(_mostrarAvancados ? Icons.expand_less : Icons.expand_more, size: 20, color: CoresApp.primaria.shade200),
             const SizedBox(width: 10),
             Text(
-              _mostrarAvancados ? 'Ocultar avançados' : 'Avançados',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: CoresApp.primaria.shade100), // 🔧 ALTERADO
+              _mostrarAvancados ? l10n.ocultarAvancados : l10n.avancados, // 🔧
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: CoresApp.primaria.shade100),
             ),
           ],
         ),

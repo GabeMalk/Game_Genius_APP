@@ -3,6 +3,8 @@
 // worker.js. Só o "label" é exclusivo daqui.
 // ============================================================
 
+import 'package:indicador_jogos/l10n/app_localizations.dart';
+
 // --- CICLO DE PREFERÊNCIA (neutro / positivo / negativo) ---
 
 // Enum que representa o estado atual de um filtro na interface:
@@ -32,12 +34,11 @@ extension CicloPreferenciaFiltro on PreferenciaFiltro {
 // Um filtro individual do catálogo.
 class FiltroInfo {
   final String chave; // TEM que bater com a chave do worker.js
-  final String label; // texto exibido na UI (fica isolado aqui pensando em i18n futuro)
   final bool basico; // se true, é mostrado por padrão; se false, só após expandir "avançados"
 
   // Construtor constante (permite criar objetos em tempo de compilação,
   // otimizando performance e permitindo listas const)
-  const FiltroInfo({required this.chave, required this.label, this.basico = false});
+  const FiltroInfo({required this.chave, this.basico = false});
 }
 
 // --- LISTA DE TODOS OS FILTROS  ---
@@ -48,39 +49,39 @@ class FiltroInfo {
 
 const List<FiltroInfo> catalogoDeFiltros = [
   // ---- básicos (aparecem por padrão) ----
-  FiltroInfo(chave: 'rpg', label: 'RPG', basico: true),
-  FiltroInfo(chave: 'aventura', label: 'Aventura', basico: true),
-  FiltroInfo(chave: 'acao', label: 'Ação', basico: true),
-  FiltroInfo(chave: 'plataforma_genero', label: 'Jogos de plataforma', basico: true),
-  FiltroInfo(chave: 'estrategia', label: 'Estratégia', basico: true),
-  FiltroInfo(chave: 'tiro', label: 'Tiro', basico: true),
-  FiltroInfo(chave: 'luta', label: 'Luta', basico: true),
-  FiltroInfo(chave: 'simulacao_trabalho', label: 'Simulação e trabalho', basico: true),
-  FiltroInfo(chave: 'visual_novel', label: 'Visual Novel', basico: true),
-  FiltroInfo(chave: 'esportes_corrida', label: 'Esportes e corrida', basico: true),
-  FiltroInfo(chave: 'quebra_cabeca', label: 'Quebra-cabeça', basico: true),
-  FiltroInfo(chave: 'cartas_tabuleiro', label: 'Cartas e tabuleiro', basico: true),
-  FiltroInfo(chave: 'terror_suspense', label: 'Terror e suspense', basico: true),
+  FiltroInfo(chave: 'rpg', basico: true),
+  FiltroInfo(chave: 'aventura', basico: true),
+  FiltroInfo(chave: 'acao', basico: true),
+  FiltroInfo(chave: 'plataforma_genero', basico: true),
+  FiltroInfo(chave: 'estrategia', basico: true),
+  FiltroInfo(chave: 'tiro', basico: true),
+  FiltroInfo(chave: 'luta', basico: true),
+  FiltroInfo(chave: 'simulacao_trabalho', basico: true),
+  FiltroInfo(chave: 'visual_novel', basico: true),
+  FiltroInfo(chave: 'esportes_corrida', basico: true),
+  FiltroInfo(chave: 'quebra_cabeca', basico: true),
+  FiltroInfo(chave: 'cartas_tabuleiro', basico: true),
+  FiltroInfo(chave: 'terror_suspense', basico: true),
 
   // ---- avançados (só aparecem ao clicar em "Avançados") ----
-  FiltroInfo(chave: 'roguelike', label: 'Roguelike'),
-  FiltroInfo(chave: 'primeira_pessoa', label: 'Primeira pessoa'),
-  FiltroInfo(chave: 'indie', label: 'Indie'),
-  FiltroInfo(chave: 'point_and_click', label: "Point 'n' Click"),
-  FiltroInfo(chave: 'mundo_aberto', label: 'Mundo aberto'),
-  FiltroInfo(chave: 'drama_misterio', label: 'Drama e mistério'),
-  FiltroInfo(chave: 'sandbox', label: 'Sandbox'),
-  FiltroInfo(chave: 'sobrevivencia', label: 'Sobrevivência'),
-  FiltroInfo(chave: 'furtividade', label: 'Furtividade'),
-  FiltroInfo(chave: 'fantasia_medieval', label: 'Fantasia e medieval'),
-  FiltroInfo(chave: 'ficcao_cientifica', label: 'Ficção científica'),
-  FiltroInfo(chave: 'musica', label: 'Música'),
-  FiltroInfo(chave: 'rts', label: 'RTS'),
-  FiltroInfo(chave: 'jogo_de_festa', label: 'Jogo de festa'),
-  FiltroInfo(chave: 'engracado', label: 'Engraçado'),
-  FiltroInfo(chave: 'romance', label: 'Romance'),
-  FiltroInfo(chave: 'anime', label: 'Anime'),
-  FiltroInfo(chave: 'erotic', label: 'Erótico'),
+  FiltroInfo(chave: 'roguelike'),
+  FiltroInfo(chave: 'primeira_pessoa'),
+  FiltroInfo(chave: 'indie'),
+  FiltroInfo(chave: 'point_and_click'),
+  FiltroInfo(chave: 'mundo_aberto'),
+  FiltroInfo(chave: 'drama_misterio'),
+  FiltroInfo(chave: 'sandbox'),
+  FiltroInfo(chave: 'sobrevivencia'),
+  FiltroInfo(chave: 'furtividade'),
+  FiltroInfo(chave: 'fantasia_medieval'),
+  FiltroInfo(chave: 'ficcao_cientifica'),
+  FiltroInfo(chave: 'musica'),
+  FiltroInfo(chave: 'rts'),
+  FiltroInfo(chave: 'jogo_de_festa'),
+  FiltroInfo(chave: 'engracado'),
+  FiltroInfo(chave: 'romance'),
+  FiltroInfo(chave: 'anime'),
+  FiltroInfo(chave: 'erotic'),
 ];
 
 // --- GETTERS PARA LISTAS ESPECÍFICAS ---
@@ -90,23 +91,71 @@ List<FiltroInfo> get filtrosBasicos => catalogoDeFiltros.where((f) => f.basico).
 // Retorna apenas os filtros avançados
 List<FiltroInfo> get filtrosAvancados => catalogoDeFiltros.where((f) => !f.basico).toList();
 
+// --- Chave para texto localizado ---
+String labelDoFiltro(AppLocalizations l10n, String chave) {
+  switch (chave) {
+    case 'rpg': return l10n.filtroRpg;
+    case 'aventura': return l10n.filtroAventura;
+    case 'acao': return l10n.filtroAcao;
+    case 'plataforma_genero': return l10n.filtroPlataformaGenero;
+    case 'estrategia': return l10n.filtroEstrategia;
+    case 'tiro': return l10n.filtroTiro;
+    case 'luta': return l10n.filtroLuta;
+    case 'simulacao_trabalho': return l10n.filtroSimulacaoTrabalho;
+    case 'visual_novel': return l10n.filtroVisualNovel;
+    case 'esportes_corrida': return l10n.filtroEsportesCorrida;
+    case 'quebra_cabeca': return l10n.filtroQuebraCabeca;
+    case 'cartas_tabuleiro': return l10n.filtroCartasTabuleiro;
+    case 'terror_suspense': return l10n.filtroTerrorSuspense;
+    case 'roguelike': return l10n.filtroRoguelike;
+    case 'primeira_pessoa': return l10n.filtroPrimeiraPessoa;
+    case 'indie': return l10n.filtroIndie;
+    case 'point_and_click': return l10n.filtroPointAndClick;
+    case 'mundo_aberto': return l10n.filtroMundoAberto;
+    case 'drama_misterio': return l10n.filtroDramaMisterio;
+    case 'sandbox': return l10n.filtroSandbox;
+    case 'sobrevivencia': return l10n.filtroSobrevivencia;
+    case 'furtividade': return l10n.filtroFurtividade;
+    case 'fantasia_medieval': return l10n.filtroFantasiaMedieval;
+    case 'ficcao_cientifica': return l10n.filtroFiccaoCientifica;
+    case 'musica': return l10n.filtroMusica;
+    case 'rts': return l10n.filtroRts;
+    case 'jogo_de_festa': return l10n.filtroJogoDeFesta;
+    case 'engracado': return l10n.filtroEngracado;
+    case 'romance': return l10n.filtroRomance;
+    case 'anime': return l10n.filtroAnime;
+    case 'erotic': return l10n.filtroErotic;
+    default: return chave; // nunca deveria cair aqui
+  }
+}
+
 // ---- Eras / igual ao calcularEras() do worker ----
 
 // Representa uma era (período de lançamento)
 class EraInfo {
   final String chave;
-  final String label;
-  const EraInfo(this.chave, this.label);
+  const EraInfo(this.chave);
 }
 
 // Lista espelho das chaves retornadas por calcularEras() no Worker
 const List<EraInfo> catalogoDeEras = [
-  EraInfo('lancamentos', 'Lançamentos'),
-  EraInfo('atualidade', 'Atualidade'),
-  EraInfo('modernos', 'Modernos'),
-  EraInfo('old_school', 'Old School'),
-  EraInfo('classicos', 'Clássicos'),
+  EraInfo('lancamentos'),
+  EraInfo('atualidade'),
+  EraInfo('modernos'),
+  EraInfo('old_school'),
+  EraInfo('classicos'),
 ];
+
+String labelDaEra(AppLocalizations l10n, String chave) {
+  switch (chave) {
+    case 'lancamentos': return l10n.eraLancamentos;
+    case 'atualidade': return l10n.eraAtualidade;
+    case 'modernos': return l10n.eraModernos;
+    case 'old_school': return l10n.eraOldSchool;
+    case 'classicos': return l10n.eraClassicos;
+    default: return chave;
+  }
+}
 
 // --- PLATAFORMAS ---
 

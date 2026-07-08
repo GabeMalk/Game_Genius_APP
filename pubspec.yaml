@@ -1,5 +1,5 @@
 name: indicador_jogos
-description: "Codigo para um app que recomenda jogos baseado em filtros selecionados pelo usuario."
+description: "Um app que recomenda jogos baseado em filtros selecionados pelo usuario."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -37,6 +37,12 @@ dependencies:
   cupertino_icons: ^1.0.8
   url_launcher: ^6.3.2
 
+# Localização
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  google_mobile_ads: ^9.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -47,6 +53,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -59,6 +67,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+# Pra localização
+  generate: true 
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

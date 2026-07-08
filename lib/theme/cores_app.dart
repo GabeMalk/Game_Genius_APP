@@ -5,6 +5,6 @@ import 'package:flutter/material.dart';
 
 class CoresApp {
   static const MaterialColor primaria = Colors.green;
-  static const Color fundo = Color(0xFF10140F);
-  static const Color superficie = Color(0xFF1B221A);
+  static const Color fundo = Color.fromARGB(255, 20, 21, 20);
+  static const Color superficie = Color.fromARGB(255, 27, 24, 24);
 }

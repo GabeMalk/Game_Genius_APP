@@ -1,0 +1,174 @@
+{
+  "@@locale": "en",
+
+  "botaoSortear": "Find a new game to play!",
+  "@botaoSortear": { "description": "Botão principal para sortear jogos" },
+
+  "estadoInicialTexto": "Tap the button below to\nget a recommendation!",
+  "@estadoInicialTexto": { "description": "Texto explicativo inicial" },
+
+  "botaoVerNaLoja": "View in store",
+  "@botaoVerNaLoja": { "description": "Botão para ver jogo na loja" },
+
+  "erroAbrirLink": "Could not open the link: {url}",
+  "@erroAbrirLink": { 
+    "description": "Erro ao abrir link",
+    "placeholders": { "url": { "type": "String" } }
+  },
+
+  "filtrarBotao": "Filter",
+  "@filtrarBotao": { "description": "Botão para abrir filtros" },
+
+  "personalizarBuscaTitulo": "Customize search",
+  "@personalizarBuscaTitulo": { "description": "Título da tela de filtros" },
+
+  "dicaFiltros": "Tap once to include, twice to exclude, and once again to clear.",
+  "@dicaFiltros": { "description": "Dica de uso dos filtros" },
+
+  "opcoesTitulo": "Options",
+  "@opcoesTitulo": { "description": "Título da tela de opções" },
+
+  "sobreTexto": "Made by Malk.\n\nGame data provided by IGDB.com.",
+  "@sobreTexto": { "description": "Texto de atribuição" },
+
+  "fechar": "Close",
+  "@fechar": { "description": "Botão fechar" },
+
+  "erroBuscaGenerico": "Error fetching a recommendation. Please try again.",
+  "@erroBuscaGenerico": { "description": "Erro genérico de busca" },
+
+  "nenhumJogoEncontrado": "No games found with these filters. Try adjusting your options.",
+  "@nenhumJogoEncontrado": { "description": "Mensagem quando nenhum jogo é encontrado" },
+
+  "secaoPlataforma": "Platform",
+  "@secaoPlataforma": { "description": "Seção de plataformas" },
+
+  "secaoEpoca": "Era",
+  "@secaoEpoca": { "description": "Seção de épocas" },
+
+  "secaoJogadores": "Players",
+  "@secaoJogadores": { "description": "Seção de número de jogadores" },
+
+  "limparFiltros": "Clear filters",
+  "@limparFiltros": { "description": "Botão para limpar filtros" },
+
+  "modoSingle": "Single player",
+  "@modoSingle": { "description": "Modo single player" },
+
+  "modoMulti": "Multiplayer",
+  "@modoMulti": { "description": "Modo multiplayer" },
+
+  "avancados": "Advanced",
+  "@avancados": { "description": "Botão para mostrar filtros avançados" },
+
+  "ocultarAvancados": "Hide advanced",
+  "@ocultarAvancados": { "description": "Botão para esconder filtros avançados" },
+
+  "eraLancamentos": "New releases",
+  "@eraLancamentos": { "description": "Filtro de novos lançamentos" },
+
+  "eraAtualidade": "Current era",
+  "@eraAtualidade": { "description": "Filtro de atualidade" },
+
+  "eraModernos": "Modern",
+  "@eraModernos": { "description": "Filtro de jogos modernos" },
+
+  "eraOldSchool": "Old school",
+  "@eraOldSchool": { "description": "Filtro de jogos old school" },
+
+  "eraClassicos": "Classics",
+  "@eraClassicos": { "description": "Filtro de clássicos" },
+
+  "filtroRpg": "RPG",
+  "@filtroRpg": { "description": "Filtro de RPG" },
+
+  "filtroAventura": "Adventure",
+  "@filtroAventura": { "description": "Filtro de aventura" },
+
+  "filtroAcao": "Action",
+  "@filtroAcao": { "description": "Filtro de ação" },
+
+  "filtroPlataformaGenero": "Platformer",
+  "@filtroPlataformaGenero": { "description": "Filtro de platformer" },
+
+  "filtroEstrategia": "Strategy",
+  "@filtroEstrategia": { "description": "Filtro de estratégia" },
+
+  "filtroTiro": "Shooter",
+  "@filtroTiro": { "description": "Filtro de shooter" },
+
+  "filtroLuta": "Fighting",
+  "@filtroLuta": { "description": "Filtro de luta" },
+
+  "filtroSimulacaoTrabalho": "Simulation & work",
+  "@filtroSimulacaoTrabalho": { "description": "Filtro de simulação e trabalho" },
+
+  "filtroVisualNovel": "Visual Novel",
+  "@filtroVisualNovel": { "description": "Filtro de visual novel" },
+
+  "filtroEsportesCorrida": "Sports & racing",
+  "@filtroEsportesCorrida": { "description": "Filtro de esportes e corrida" },
+
+  "filtroQuebraCabeca": "Puzzle",
+  "@filtroQuebraCabeca": { "description": "Filtro de puzzle" },
+
+  "filtroCartasTabuleiro": "Cards & board games",
+  "@filtroCartasTabuleiro": { "description": "Filtro de jogos de cartas e tabuleiro" },
+
+  "filtroTerrorSuspense": "Horror & thriller",
+  "@filtroTerrorSuspense": { "description": "Filtro de horror e suspense" },
+
+  "filtroRoguelike": "Roguelike",
+  "@filtroRoguelike": { "description": "Filtro de roguelike" },
+
+  "filtroPrimeiraPessoa": "First person",
+  "@filtroPrimeiraPessoa": { "description": "Filtro de primeira pessoa" },
+
+  "filtroIndie": "Indie",
+  "@filtroIndie": { "description": "Filtro indie" },
+
+  "filtroPointAndClick": "Point 'n' Click",
+  "@filtroPointAndClick": { "description": "Filtro point and click" },
+
+  "filtroMundoAberto": "Open world",
+  "@filtroMundoAberto": { "description": "Filtro de mundo aberto" },
+
+  "filtroDramaMisterio": "Drama & mystery",
+  "@filtroDramaMisterio": { "description": "Filtro de drama e mistério" },
+
+  "filtroSandbox": "Sandbox",
+  "@filtroSandbox": { "description": "Filtro de sandbox" },
+
+  "filtroSobrevivencia": "Survival",
+  "@filtroSobrevivencia": { "description": "Filtro de sobrevivência" },
+
+  "filtroFurtividade": "Stealth",
+  "@filtroFurtividade": { "description": "Filtro de furtividade" },
+
+  "filtroFantasiaMedieval": "Fantasy & medieval",
+  "@filtroFantasiaMedieval": { "description": "Filtro de fantasia e medieval" },
+
+  "filtroFiccaoCientifica": "Science fiction",
+  "@filtroFiccaoCientifica": { "description": "Filtro de ficção científica" },
+
+  "filtroMusica": "Music",
+  "@filtroMusica": { "description": "Filtro de música" },
+
+  "filtroRts": "RTS",
+  "@filtroRts": { "description": "Filtro de RTS" },
+
+  "filtroJogoDeFesta": "Party game",
+  "@filtroJogoDeFesta": { "description": "Filtro de jogo de festa" },
+
+  "filtroEngracado": "Funny",
+  "@filtroEngracado": { "description": "Filtro de engraçado" },
+
+  "filtroRomance": "Romance",
+  "@filtroRomance": { "description": "Filtro de romance" },
+
+  "filtroAnime": "Anime",
+  "@filtroAnime": { "description": "Filtro de anime" },
+
+  "filtroErotic": "Erotic",
+  "@filtroErotic": { "description": "Filtro erótico" }
+}
