@@ -8,7 +8,7 @@ class ParametrosBusca {
   // ---- CAMPOS ----
 
   // Plataforma selecionada (ID da IGDB). Inicia com 6 (PC).
-  int plataforma;
+  String plataforma;
 
   // Aqui está o "estado" de cada filtro
   // Mapa que associa a chave do filtro (ex: 'rpg') ao estado atual
@@ -25,7 +25,7 @@ class ParametrosBusca {
 
   // Inicializa os campos com valores padrão.
   ParametrosBusca()
-      : plataforma = 6,               // PC, único disponível por enquanto
+      : plataforma = 'pc',               // PC por padrão
         modoJogo = null,               // sem restrição de modo
         eras = {'atualidade'},         // era padrão: jogos de 2020 até hoje
         preferenciasFiltros = {
@@ -65,13 +65,17 @@ class ParametrosBusca {
     return contagem;
   }
 
+  // Resolve a chave em ids
+  List<int> get plataformaIds =>
+        catalogoDePlataformas.firstWhere((p) => p.chave == plataforma).ids;
+
   // ---- SERIALIZAÇÃO PARA JSON ----
 
   // Converte os parâmetros atuais para um mapa JSON compatível com o Worker.
   // Recebe a lista de IDs do histórico (jogos já vistos).
   Map<String, dynamic> toJson(List<int> historicoIds) {
     return {
-      'plataforma': plataforma,
+      'plataforma': plataformaIds,
       // só inclui os campos se não estiverem vazios/nulos
       if (filtrosPositivos.isNotEmpty) 'filtros': filtrosPositivos.toList(),
       if (filtrosNegativos.isNotEmpty) 'filtrosNegativos': filtrosNegativos.toList(),

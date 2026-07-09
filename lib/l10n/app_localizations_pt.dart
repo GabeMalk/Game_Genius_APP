@@ -38,7 +38,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get sobreTexto =>
-      'Feito por Malk.\n\nDados de jogos fornecidos pela IGDB.com.';
+      'Feito por Malk.\n\nDados de jogos fornecidos pela IGDB.com';
 
   @override
   String get fechar => 'Fechar';
@@ -182,4 +182,31 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get filtroErotic => 'Erótico';
+
+  @override
+  String get videoApoiar => '🎥 Apoiar assistindo um vídeo';
+
+  @override
+  String get videoCarregando => 'Carregando...';
+
+  @override
+  String get videoObrigadoTitulo => 'Muito obrigado!';
+
+  @override
+  String get videoObrigadoMensagem =>
+      'Seu apoio ajuda a manter o app funcionando.';
+
+  @override
+  String get videoErroCarregar =>
+      'Falha ao carregar o vídeo. Verifique sua conexão e tente novamente.';
+
+  @override
+  String get videoErroExibicao =>
+      'Não foi possível exibir o vídeo. Tente novamente.';
+
+  @override
+  String get videoIndisponivel => 'Anúncio não está disponível no momento.';
+
+  @override
+  String get erro => 'Erro';
 }

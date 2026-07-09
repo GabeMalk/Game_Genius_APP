@@ -37,7 +37,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get opcoesTitulo => 'Options';
 
   @override
-  String get sobreTexto => 'Made by Malk.\n\nGame data provided by IGDB.com.';
+  String get sobreTexto => 'Made by Malk.\n\nGame data provided by IGDB.com';
 
   @override
   String get fechar => 'Close';
@@ -181,4 +181,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get filtroErotic => 'Erotic';
+
+  @override
+  String get videoApoiar => '🎥 Support by watching a video';
+
+  @override
+  String get videoCarregando => 'Loading...';
+
+  @override
+  String get videoObrigadoTitulo => 'Thank you so much!';
+
+  @override
+  String get videoObrigadoMensagem =>
+      'Your support helps keep the app running.';
+
+  @override
+  String get videoErroCarregar =>
+      'Failed to load the video. Check your connection and try again.';
+
+  @override
+  String get videoErroExibicao => 'Could not display the video. Try again.';
+
+  @override
+  String get videoIndisponivel => 'Ad is not available at the moment.';
+
+  @override
+  String get erro => 'Error';
 }

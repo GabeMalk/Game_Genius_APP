@@ -6,10 +6,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:indicador_jogos/l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'screens/tela_recomendacao.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await MobileAds.instance.initialize();
+  // Isso aqui é pra não bugar no chrome
+  if (!kIsWeb) {
+  await MobileAds.instance.initialize();}
   runApp(const IndicaJogoApp());
 }
 

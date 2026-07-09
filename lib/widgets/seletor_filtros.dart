@@ -186,21 +186,35 @@ class _SeletorFiltrosState extends State<SeletorFiltros> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Wrap(  // Wrap organiza os chips em linha e quebra para a próxima se necessário.
         spacing: 8,  // espaço horizontal entre chips
+          runSpacing: 8,
         children: catalogoDePlataformas.map((p) {
           return _buildChip(
             label: p.label,
-            icone: Icons.computer, // Ícone de telinha pro PC
+            icone: _iconeDaPlataforma(p.chave), // Ícones
             // Verifica se esta plataforma é a que está selecionada.
-            selecionada: widget.parametros.plataforma == p.id,
+            selecionada: widget.parametros.plataforma == p.chave,
             onTap: () {
               // Atualiza a plataforma no objeto de parâmetros.
-              setState(() => widget.parametros.plataforma = p.id);
+              setState(() => widget.parametros.plataforma = p.chave);
               widget.onChanged();
             },
           );
         }).toList(),
       ),
     );
+  }
+
+  IconData? _iconeDaPlataforma(String chave) {
+    switch (chave) {
+      case 'pc': return Icons.computer;
+      case 'switch': return Icons.videogame_asset;
+      case 'playstation': return Icons.sports_esports;
+      case 'xbox': return Icons.sports_esports;
+      case 'mobile': return Icons.smartphone;
+      case 'web': return Icons.public;
+      case 'emulador': return Icons.memory;
+      default: return null;
+    }
   }
 
   // Constrói a seção de eras (lançamentos, atualidade, etc.).

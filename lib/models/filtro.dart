@@ -161,12 +161,23 @@ String labelDaEra(AppLocalizations l10n, String chave) {
 
 // Representa uma plataforma (ex: PC, Xbox, etc.).
 class PlataformaInfo {
-  final int id;  // ID da plataforma na IGDB (ex: 6 = PC)
+  final String chave; // Nome da plat
+  final List<int> ids; // ID da plataforma na IGDB (ex: 6 = PC)
   final String label; // texto exibido
-  const PlataformaInfo({required this.id, required this.label});
+  const PlataformaInfo({required this.chave, required this.ids, required this.label});
 }
 
-// Lista de plataformas disponíveis. Apenas PC por enquanto.
+// Lista de plataformas disponíveis. 
 const List<PlataformaInfo> catalogoDePlataformas = [
-  PlataformaInfo(id: 6, label: 'PC'),
+  PlataformaInfo(chave: 'pc', ids: [6], label: 'PC'),
+  PlataformaInfo(chave: 'switch', ids: [130, 508], label: 'Switch'),
+  PlataformaInfo(chave: 'playstation', ids: [7, 8, 9, 48, 167], label: 'PlayStation'),
+  PlataformaInfo(chave: 'xbox', ids: [11, 12, 49, 169], label: 'Xbox'),
+  PlataformaInfo(chave: 'mobile', ids: [34], label: 'Mobile'),
+  PlataformaInfo(chave: 'web', ids: [82], label: 'Web'),
+  PlataformaInfo(
+    chave: 'emulador',
+    ids: [5, 19, 64, 29, 32, 38, 7, 8, 18, 21, 137, 37, 4, 20, 33, 24, 22, 52],
+    label: 'Emulator', // 🔧 mantido em inglês, igual o resto
+  ),
 ];

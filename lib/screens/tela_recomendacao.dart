@@ -11,6 +11,7 @@ import '../services/game_repository.dart';
 import '../services/historico_service.dart';
 import '../widgets/seletor_filtros.dart';
 import '../widgets/banner_ad_widget.dart';
+import '../widgets/sobre.dart';
 import '../theme/cores_app.dart';
 
 class TelaRecomendacao extends StatefulWidget {
@@ -268,6 +269,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
       if (mounted) {
         setState(() {
           _carregando = false;
+          _jogoSugerido = null; 
           _mensagemErro = AppLocalizations.of(context)!.nenhumJogoEncontrado;
         });
       }
@@ -276,6 +278,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
       if (mounted) {
         setState(() {
           _carregando = false;
+          _jogoSugerido = null; 
           _mensagemErro = AppLocalizations.of(context)!.erroBuscaGenerico;
         });
       }
@@ -300,32 +303,12 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
     }
   }
 
-  // Cobre com atribuição e um dialog com o
-  // toggle de "Modo noturno" além do texto de atribuição.
-  // Usa StatefulBuilder porque o dialog é uma "rota" própria — sem
-  // isso, o Switch não conseguiria se redesenhar sozinho ao tocar.
-  void _abrirOpcoes() {
-    final l10n = AppLocalizations.of(context)!;
-    
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: CoresApp.superficie,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text(l10n.opcoesTitulo, style: TextStyle(color: Colors.white)),
-        content: Text(
-          l10n.sobreTexto,
-          style: TextStyle(color: Colors.grey.shade300, height: 1.5),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n.fechar, style: TextStyle(color: CoresApp.primaria.shade200)),
-          ),
-        ],
-      ),
-    );
-  }
+ void _abrirOpcoes() {
+  showDialog(
+    context: context,
+    builder: (context) => const DialogoOpcoes(),
+  );
+}
 
 
   // ============================================================
@@ -338,7 +321,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
       // Cabeçalho customizado (_buildTopo) logo abaixo, abrindo espaço pro banner de anúncio.
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           child: Column(
             children: [
               _buildTopo(),
@@ -369,19 +352,19 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
           IconButton(
             onPressed: _voltarParaInicio,
             icon: const Icon(Icons.home_rounded, color: Colors.white),
-            tooltip: 'Início',
+            iconSize: 30,
+            tooltip: 'Home',
           ),
           Expanded(
             child: Center(
-              // 🔧 ALTERADO: era um Container placeholder cinza,
-              // agora é o banner de verdade do AdMob.
               child: const BannerAdWidget(),
             ),
           ),
           IconButton(
             onPressed: _abrirOpcoes,
             icon: const Icon(Icons.more_vert, color: Colors.white),
-            tooltip: 'Opções',
+            iconSize: 30,
+            tooltip: 'Config',
           ),
         ],
       ),

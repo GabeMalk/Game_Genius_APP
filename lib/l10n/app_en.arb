@@ -28,7 +28,7 @@
   "opcoesTitulo": "Options",
   "@opcoesTitulo": { "description": "Título da tela de opções" },
 
-  "sobreTexto": "Made by Malk.\n\nGame data provided by IGDB.com.",
+  "sobreTexto": "Made by Malk.\n\nGame data provided by IGDB.com",
   "@sobreTexto": { "description": "Texto de atribuição" },
 
   "fechar": "Close",
@@ -170,5 +170,29 @@
   "@filtroAnime": { "description": "Filtro de anime" },
 
   "filtroErotic": "Erotic",
-  "@filtroErotic": { "description": "Filtro erótico" }
+  "@filtroErotic": { "description": "Filtro erótico" },
+
+  "videoApoiar": "🎥 Support by watching a video",
+  "@videoApoiar": { "description": "Texto do botão para o usuário assistir a um anúncio em vídeo para apoiar o app" },
+
+  "videoCarregando": "Loading...",
+  "@videoCarregando": { "description": "Texto de carregamento exibido enquanto o anúncio em vídeo está sendo baixado" },
+
+  "videoObrigadoTitulo": "Thank you so much!",
+  "@videoObrigadoTitulo": { "description": "Título do diálogo de agradecimento após o usuário assistir ao vídeo completo" },
+
+  "videoObrigadoMensagem": "Your support helps keep the app running.",
+  "@videoObrigadoMensagem": { "description": "Mensagem de agradecimento explicando o impacto do apoio do usuário" },
+
+  "videoErroCarregar": "Failed to load the video. Check your connection and try again.",
+  "@videoErroCarregar": { "description": "Mensagem de erro disparada quando o anúncio falha ao carregar devido à internet" },
+
+  "videoErroExibicao": "Could not display the video. Try again.",
+  "@videoErroExibicao": { "description": "Mensagem de erro quando o vídeo é carregado mas falha na hora de reproduzir" },
+
+  "videoIndisponivel": "Ad is not available at the moment.",
+  "@videoIndisponivel": { "description": "Aviso exibido quando a rede do AdMob não tem nenhum anúncio em vídeo para entregar" },
+
+  "erro": "Error",
+  "@erro": { "description": "Palavra genérica utilizada para indicar um erro no aplicativo" }
 }

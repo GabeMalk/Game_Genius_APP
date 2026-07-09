@@ -149,7 +149,7 @@ abstract class AppLocalizations {
   /// Texto de atribuição
   ///
   /// In en, this message translates to:
-  /// **'Made by Malk.\n\nGame data provided by IGDB.com.'**
+  /// **'Made by Malk.\n\nGame data provided by IGDB.com'**
   String get sobreTexto;
 
   /// Botão fechar
@@ -433,6 +433,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Erotic'**
   String get filtroErotic;
+
+  /// Texto do botão para o usuário assistir a um anúncio em vídeo para apoiar o app
+  ///
+  /// In en, this message translates to:
+  /// **'🎥 Support by watching a video'**
+  String get videoApoiar;
+
+  /// Texto de carregamento exibido enquanto o anúncio em vídeo está sendo baixado
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get videoCarregando;
+
+  /// Título do diálogo de agradecimento após o usuário assistir ao vídeo completo
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you so much!'**
+  String get videoObrigadoTitulo;
+
+  /// Mensagem de agradecimento explicando o impacto do apoio do usuário
+  ///
+  /// In en, this message translates to:
+  /// **'Your support helps keep the app running.'**
+  String get videoObrigadoMensagem;
+
+  /// Mensagem de erro disparada quando o anúncio falha ao carregar devido à internet
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load the video. Check your connection and try again.'**
+  String get videoErroCarregar;
+
+  /// Mensagem de erro quando o vídeo é carregado mas falha na hora de reproduzir
+  ///
+  /// In en, this message translates to:
+  /// **'Could not display the video. Try again.'**
+  String get videoErroExibicao;
+
+  /// Aviso exibido quando a rede do AdMob não tem nenhum anúncio em vídeo para entregar
+  ///
+  /// In en, this message translates to:
+  /// **'Ad is not available at the moment.'**
+  String get videoIndisponivel;
+
+  /// Palavra genérica utilizada para indicar um erro no aplicativo
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get erro;
 }
 
 class _AppLocalizationsDelegate

@@ -3,8 +3,9 @@
 // ============================================================
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
-const String _idAnuncioTeste = 'ca-app-pub-3940256099942544/6300978111'; // Banner de tamanho fixo
+const String _idAnuncioTeste = 'ca-app-pub-3940256099942544/9214589741'; // Banner de tamanho fixo
 
 class BannerAdWidget extends StatefulWidget {
   const BannerAdWidget({super.key});
@@ -20,7 +21,8 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   @override
   void initState() {
     super.initState();
-    _carregarAnuncio();
+     if (!kIsWeb) { 
+    _carregarAnuncio();}
   }
 
   void _carregarAnuncio() {
@@ -51,7 +53,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_carregado || _banner == null) {
+    if (kIsWeb || !_carregado || _banner == null) {
       // Espaço reservado do mesmo tamanho, mesmo antes de carregar —
       // evita a tela "pular" quando o anúncio chegar.
       return const SizedBox(width: 320, height: 50);
