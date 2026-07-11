@@ -2,7 +2,6 @@
 // Mains
 // ============================================================
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:indicador_jogos/l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'screens/tela_recomendacao.dart';

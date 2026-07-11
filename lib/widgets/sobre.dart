@@ -4,7 +4,9 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:indicador_jogos/l10n/app_localizations.dart';
 
 class DialogoOpcoes extends StatefulWidget {
-  const DialogoOpcoes({super.key});
+  const DialogoOpcoes({super.key, this.isClickShortcut = false,});
+
+ final bool isClickShortcut; 
 
   @override
   State<DialogoOpcoes> createState() => _DialogoOpcoesState();
@@ -15,6 +17,7 @@ class _DialogoOpcoesState extends State<DialogoOpcoes> {
   bool _isLoadingRewarded = false;
   bool _rewardedReady = false;
 
+  // O oficial é ca-app-pub-1018185380682464/5490513282
   static const String _rewardedUnitId = 'ca-app-pub-3940256099942544/5224354917';
 
   @override
@@ -72,6 +75,8 @@ class _DialogoOpcoesState extends State<DialogoOpcoes> {
         _rewardedReady = false;
         if (mounted) {
           setState(() {});
+          if (Navigator.canPop(context)) {
+          Navigator.of(context).pop();}
           _mostrarAgradecimento();
         }
       },
@@ -171,6 +176,10 @@ class _DialogoOpcoesState extends State<DialogoOpcoes> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    // Texto diferente quando aberto via contador de cliques
+     final sobreTexto = widget.isClickShortcut 
+      ? l10n.sobreTextoClickShortcut  // Quando tem o limite de click
+      : l10n.sobreTexto;
     return AlertDialog(
       backgroundColor: const Color(0xFF1E1B2E),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -179,7 +188,7 @@ class _DialogoOpcoesState extends State<DialogoOpcoes> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            l10n.sobreTexto,
+            sobreTexto,
             style: const TextStyle(color: Colors.white, height: 1, fontSize: 18),
           ),
           const SizedBox(height: 24),

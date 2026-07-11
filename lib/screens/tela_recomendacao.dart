@@ -13,6 +13,7 @@ import '../widgets/seletor_filtros.dart';
 import '../widgets/banner_ad_widget.dart';
 import '../widgets/sobre.dart';
 import '../theme/cores_app.dart';
+import 'package:just_audio/just_audio.dart';
 
 class TelaRecomendacao extends StatefulWidget {
   const TelaRecomendacao({super.key});
@@ -37,6 +38,9 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
   // Inicializado com valores padrão no construtor da classe.
   final ParametrosBusca _parametros = ParametrosBusca();
 
+ // Player de audio
+  late final AudioPlayer _audioPlayer = AudioPlayer();
+
   // ============================================================
   // TEMPOS - LEMBRA DE AUMENTAR DEPOIS
   // ============================================================
@@ -53,6 +57,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
   bool _carregando = false;       // true durante a busca (mostra loading)
   String? _mensagemErro;          // mensagem de erro para exibir (null = sem erro)
   List<int> _historicoIds = [];   // IDs já recomendados (carregados do storage)
+  int _qtdClicks = 4;             // Quantidade de vezes que clicou no sortear
 
   // ============================================================
   // ANIMAÇÃO
@@ -117,6 +122,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
   void dispose() {
     _animController.dispose();
     _loadingController.dispose();
+    _audioPlayer.dispose(); 
     super.dispose();
   }
 
@@ -197,7 +203,7 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
                         parametros: _parametros,
                         onChanged: () {
                           // Atualiza o modal e a tela principal (badge)
-                          setModalState(() {});
+                          setModalState((){});
                           setState(() {});
                         },
                         onLimparFiltros: () {
@@ -262,8 +268,12 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
 
       // Dispara a animação
       _animController.forward(from: 0);
+      // Reproduz o som
+      _reproduzirSomSorteio();
+
        await Future.delayed(_duracaoAnimacaoRevelacao);
-       if (mounted) setState(() => _carregando = false);
+       if (mounted) {
+        setState(() => _carregando = false); }
     } on NenhumJogoEncontradoException catch (_) {
       // Erro esperado: nenhum jogo encontrado com esses filtros
       if (mounted) {
@@ -285,6 +295,17 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
     }
   }
 
+  // Reprodutor do audio de sorteio
+  Future<void> _reproduzirSomSorteio() async {
+  try {
+    await _audioPlayer.setVolume(0.1); 
+    await _audioPlayer.setAsset('assets/audio/sorteioFX.mp3');
+    await _audioPlayer.play();
+  } catch (e) {
+    debugPrint('Erro ao reproduzir som: $e');
+  }
+}
+
   // Abre o link da loja no navegador/app externo
   Future<void> _abrirLoja(String url) async {
     final uri = Uri.parse(url);
@@ -303,10 +324,10 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
     }
   }
 
- void _abrirOpcoes() {
+ void _abrirOpcoes({bool isClickShortcut = false})  {
   showDialog(
     context: context,
-    builder: (context) => const DialogoOpcoes(),
+    builder: (context) => DialogoOpcoes(isClickShortcut: isClickShortcut),
   );
 }
 
@@ -626,11 +647,27 @@ class _TelaRecomendacaoState extends State<TelaRecomendacao>
 
     final l10n = AppLocalizations.of(context)!;
 
-
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton.icon(
-        onPressed: _sortearJogo,
+        onPressed: 
+        // Proteção extra contra cliques duplicados
+        _carregando ? null : () {
+          // Calcula quantas vezes foi clicado no botão
+          setState(() {
+            _qtdClicks++;
+          });
+          // Se deu 10 clicks, dispara o sobre com texto diferente
+          if (_qtdClicks >= 10) {
+            setState(() {
+              _qtdClicks = 0;
+            });
+            _abrirOpcoes(isClickShortcut: true);
+          } else {
+            // Se naõ, sorteia um jogo
+            _sortearJogo();
+          }
+        },
         icon: const Icon(Icons.casino),
         label: Text(l10n.botaoSortear),
         style: ElevatedButton.styleFrom(

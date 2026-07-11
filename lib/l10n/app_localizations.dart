@@ -143,7 +143,7 @@ abstract class AppLocalizations {
   /// Título da tela de opções
   ///
   /// In en, this message translates to:
-  /// **'Options'**
+  /// **'About'**
   String get opcoesTitulo;
 
   /// Texto de atribuição
@@ -151,6 +151,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Made by Malk.\n\nGame data provided by IGDB.com'**
   String get sobreTexto;
+
+  /// Texto alternativo sobre
+  ///
+  /// In en, this message translates to:
+  /// **'Please consider supporting the app!'**
+  String get sobreTextoClickShortcut;
 
   /// Botão fechar
   ///

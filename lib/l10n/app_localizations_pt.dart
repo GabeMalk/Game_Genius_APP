@@ -34,11 +34,14 @@ class AppLocalizationsPt extends AppLocalizations {
       'Toque 1x para incluir, 2x para excluir, 3x para limpar.';
 
   @override
-  String get opcoesTitulo => 'Opções';
+  String get opcoesTitulo => 'Sobre';
 
   @override
   String get sobreTexto =>
       'Feito por Malk.\n\nDados de jogos fornecidos pela IGDB.com';
+
+  @override
+  String get sobreTextoClickShortcut => 'Considere nos apoiar!';
 
   @override
   String get fechar => 'Fechar';

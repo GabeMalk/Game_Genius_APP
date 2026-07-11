@@ -25,11 +25,14 @@
   "dicaFiltros": "Tap once to include, twice to exclude, and once again to clear.",
   "@dicaFiltros": { "description": "Dica de uso dos filtros" },
 
-  "opcoesTitulo": "Options",
+  "opcoesTitulo": "About",
   "@opcoesTitulo": { "description": "Título da tela de opções" },
 
   "sobreTexto": "Made by Malk.\n\nGame data provided by IGDB.com",
   "@sobreTexto": { "description": "Texto de atribuição" },
+
+  "sobreTextoClickShortcut": "Please consider supporting the app!",
+  "@sobreTextoClickShortcut": { "description": "Texto alternativo sobre" },
 
   "fechar": "Close",
   "@fechar": { "description": "Botão fechar" },

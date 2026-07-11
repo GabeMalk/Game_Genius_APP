@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-const String _idAnuncioTeste = 'ca-app-pub-3940256099942544/9214589741'; // Banner de tamanho fixo
-
+// O ID oficial é ca-app-pub-1018185380682464/8730121388
+const String _idAnuncioTeste = 'ca-app-pub-3940256099942544/9214589741'; // Banner de ads
 class BannerAdWidget extends StatefulWidget {
   const BannerAdWidget({super.key});
 

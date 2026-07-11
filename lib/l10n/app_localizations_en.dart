@@ -34,10 +34,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Tap once to include, twice to exclude, and once again to clear.';
 
   @override
-  String get opcoesTitulo => 'Options';
+  String get opcoesTitulo => 'About';
 
   @override
   String get sobreTexto => 'Made by Malk.\n\nGame data provided by IGDB.com';
+
+  @override
+  String get sobreTextoClickShortcut => 'Please consider supporting the app!';
 
   @override
   String get fechar => 'Close';
